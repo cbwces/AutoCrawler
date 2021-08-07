@@ -14,7 +14,12 @@ Copyright 2018 YoongiKim
    limitations under the License.
 """
 
+<<<<<<< HEAD
 import time
+||||||| parent of 51cf947 (better skip-check strategy)
+
+=======
+>>>>>>> 51cf947 (better skip-check strategy)
 import os
 import requests
 import shutil
@@ -23,8 +28,13 @@ import argparse
 from collect_links import CollectLinks
 import imghdr
 import base64
+<<<<<<< HEAD
 from pathlib import Path
 import random
+||||||| parent of 51cf947 (better skip-check strategy)
+=======
+from pathlib import Path
+>>>>>>> 51cf947 (better skip-check strategy)
 
 
 class Sites:
@@ -192,8 +202,15 @@ class AutoCrawler:
                     ext = self.get_extension_from_link(link)
                     is_base64 = False
 
+<<<<<<< HEAD
                 no_ext_path = '{}/{}/{}_{}'.format(self.download_path, keyword.replace(' ', '-'), site_name,
                                                    str(index).zfill(4))
+||||||| parent of 51cf947 (better skip-check strategy)
+                no_ext_path = '{}/{}/{}_{}'.format(self.download_path.replace('"', ''), keyword, site_name, str(index).zfill(4))
+=======
+                no_ext_path = '{}/{}/{}_{}'.format(self.download_path.replace('"', ''), keyword, site_name,
+                                                   str(index).zfill(4))
+>>>>>>> 51cf947 (better skip-check strategy)
                 path = no_ext_path + '.' + ext
                 self.save_object_to_file(response, path, is_base64=is_base64)
 
@@ -249,7 +266,12 @@ class AutoCrawler:
 
             print('Downloading images from collected links... {} from {}'.format(keyword, site_name))
             self.download_images(keyword, links, site_name, max_count=self.limit)
+<<<<<<< HEAD
             Path('{}/{}/{}_done'.format(self.download_path, keyword.replace(' ', '-'), site_name)).touch()
+||||||| parent of 51cf947 (better skip-check strategy)
+=======
+            Path('{}/{}/{}_done'.format(self.download_path, keyword.replace('"', ''), site_name)).touch()
+>>>>>>> 51cf947 (better skip-check strategy)
 
             print('Done {} : {}'.format(site_name, keyword))
 
@@ -344,7 +366,7 @@ if __name__ == '__main__':
                         help='Skips keyword already downloaded before. This is needed when re-downloading.')
     parser.add_argument('--threads', type=int, default=4, help='Number of threads to download.')
     parser.add_argument('--google', type=str, default='true', help='Download from google.com (boolean)')
-    parser.add_argument('--naver', type=str, default='false', help='Download from naver.com (boolean)')
+    parser.add_argument('--naver', type=str, default='true', help='Download from naver.com (boolean)')
     parser.add_argument('--full', type=str, default='false',
                         help='Download full resolution image instead of thumbnails (slow)')
     parser.add_argument('--face', type=str, default='false', help='Face search mode')
