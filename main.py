@@ -366,11 +366,11 @@ if __name__ == '__main__':
                         help='Skips keyword already downloaded before. This is needed when re-downloading.')
     parser.add_argument('--threads', type=int, default=4, help='Number of threads to download.')
     parser.add_argument('--google', type=str, default='true', help='Download from google.com (boolean)')
-    parser.add_argument('--naver', type=str, default='true', help='Download from naver.com (boolean)')
+    parser.add_argument('--naver', type=str, default='false', help='Download from naver.com (boolean)')
     parser.add_argument('--full', type=str, default='false',
                         help='Download full resolution image instead of thumbnails (slow)')
     parser.add_argument('--face', type=str, default='false', help='Face search mode')
-    parser.add_argument('--no_gui', type=str, default='auto',
+    parser.add_argument('--no_gui', type=str, default='true',
                         help='No GUI mode. Acceleration for full_resolution mode. '
                              'But unstable on thumbnail mode. '
                              'Default: "auto" - false if full=false, true if full=true')
