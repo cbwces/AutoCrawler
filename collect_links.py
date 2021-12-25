@@ -23,12 +23,12 @@ import platform
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.chrome.options import Options
-from webdriver_manager.chrome import ChromeDriverManager
+# from webdriver_manager.chrome import ChromeDriverManager
 import os.path as osp
 
 
 class CollectLinks:
-    def __init__(self, no_gui=False, proxy=None):
+    def __init__(self, no_gui=True, proxy=None):
         executable = ''
 
         if platform.system() == 'Windows':
@@ -53,7 +53,8 @@ class CollectLinks:
             chrome_options.add_argument('--headless')
         if proxy:
             chrome_options.add_argument("--proxy-server={}".format(proxy))
-        self.browser = webdriver.Chrome(ChromeDriverManager().install(), chrome_options=chrome_options)
+        # self.browser = webdriver.Chrome(ChromeDriverManager().install(), chrome_options=chrome_options)
+        self.browser = webdriver.Chrome(executable_path="./chromedriver/chromedriver_linux")
 
         browser_version = 'Failed to detect version'
         chromedriver_version = 'Failed to detect version'
@@ -123,6 +124,7 @@ class CollectLinks:
             # You may need to change this. Because google image changes rapidly.
             # btn_more = self.browser.find_element(By.XPATH, '//input[@value="결과 더보기"]')
             # self.wait_and_click('//input[@id="smb"]')
+            # self.wait_and_click('//span[.="仍然查看更多结果"]')
             self.wait_and_click('//input[@type="button"]')
 
             for i in range(60):
