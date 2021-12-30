@@ -14,6 +14,7 @@ Copyright 2018 YoongiKim
    limitations under the License.
 """
 
+import time
 import os
 import requests
 import shutil
@@ -140,9 +141,9 @@ class AutoCrawler:
         print('{} keywords found: {}'.format(len(keywords), keywords))
 
         # re-save sorted keywords
-        with open(keywords_file, 'w+', encoding='utf-8') as f:
-            for keyword in keywords:
-                f.write('{}\n'.format(keyword))
+        # with open(keywords_file, 'w+', encoding='utf-8') as f:
+            # for keyword in keywords:
+                # f.write('{}\n'.format(keyword))
 
         return keywords
 
@@ -164,7 +165,7 @@ class AutoCrawler:
         return data
 
     def download_images(self, keyword, links, site_name, max_count=0):
-        self.make_dir('{}/{}'.format(self.download_path, keyword.replace('"', '')))
+        self.make_dir('{}/{}'.format(self.download_path, keyword.replace(' ', '-')))
         total = len(links)
         success_count = 0
 
@@ -191,7 +192,7 @@ class AutoCrawler:
                     ext = self.get_extension_from_link(link)
                     is_base64 = False
 
-                no_ext_path = '{}/{}/{}_{}'.format(self.download_path.replace('"', ''), keyword, site_name,
+                no_ext_path = '{}/{}/{}_{}'.format(self.download_path, keyword.replace(' ', '-'), site_name,
                                                    str(index).zfill(4))
                 path = no_ext_path + '.' + ext
                 self.save_object_to_file(response, path, is_base64=is_base64)
@@ -248,7 +249,7 @@ class AutoCrawler:
 
             print('Downloading images from collected links... {} from {}'.format(keyword, site_name))
             self.download_images(keyword, links, site_name, max_count=self.limit)
-            Path('{}/{}/{}_done'.format(self.download_path, keyword.replace('"', ''), site_name)).touch()
+            Path('{}/{}/{}_done'.format(self.download_path, keyword.replace(' ', '-'), site_name)).touch()
 
             print('Done {} : {}'.format(site_name, keyword))
 
@@ -347,7 +348,7 @@ if __name__ == '__main__':
     parser.add_argument('--full', type=str, default='false',
                         help='Download full resolution image instead of thumbnails (slow)')
     parser.add_argument('--face', type=str, default='false', help='Face search mode')
-    parser.add_argument('--no_gui', type=str, default='true',
+    parser.add_argument('--no_gui', type=str, default='auto',
                         help='No GUI mode. Acceleration for full_resolution mode. '
                              'But unstable on thumbnail mode. '
                              'Default: "auto" - false if full=false, true if full=true')
@@ -382,4 +383,7 @@ if __name__ == '__main__':
     crawler = AutoCrawler(skip_already_exist=_skip, n_threads=_threads,
                           do_google=_google, do_naver=_naver, full_resolution=_full,
                           face=_face, no_gui=_no_gui, limit=_limit, proxy_list=_proxy_list)
+    start_time = time.time()
     crawler.do_crawling()
+    during_time = time.time() - start_time
+    print("Total crawling time: %f" % during_time)

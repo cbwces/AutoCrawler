@@ -91,13 +91,17 @@ class CollectLinks:
             elem.click()
             self.highlight(elem)
         except Exception as e:
-            print('Click time out - {}'.format(xpath))
-            print('Refreshing browser...')
-            self.browser.refresh()
-            time.sleep(2)
-            return self.wait_and_click(xpath)
-
-        return elem
+            see_more_xpath = '//*[@id="islmp"]/div/div[1]/div/div[2]/span'
+            self.wait_and_click(see_more_xpath)
+            # print('Click time out - {}'.format(xpath))
+            # print('Refreshing browser...')
+            # self.browser.refresh()
+            # time.sleep(2)
+            # return self.wait_and_click(xpath)
+        # else:
+            # print('Give up current search')
+            # return False
+        return True
 
     def highlight(self, element):
         self.browser.execute_script("arguments[0].setAttribute('style', arguments[1]);", element,
@@ -124,7 +128,6 @@ class CollectLinks:
             # You may need to change this. Because google image changes rapidly.
             # btn_more = self.browser.find_element(By.XPATH, '//input[@value="결과 더보기"]')
             # self.wait_and_click('//input[@id="smb"]')
-            # self.wait_and_click('//span[.="仍然查看更多结果"]')
             self.wait_and_click('//input[@type="button"]')
 
             for i in range(60):
